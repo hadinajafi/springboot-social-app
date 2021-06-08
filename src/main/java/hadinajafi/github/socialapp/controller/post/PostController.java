@@ -3,6 +3,7 @@ package hadinajafi.github.socialapp.controller.post;
 import hadinajafi.github.socialapp.controller.post.dto.CreatePostReq;
 import hadinajafi.github.socialapp.controller.post.dto.GetPostResponse;
 import hadinajafi.github.socialapp.controller.post.dto.PostMapper;
+import hadinajafi.github.socialapp.controller.post.dto.UpdatePostReq;
 import hadinajafi.github.socialapp.persistence.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class PostController {
 	@ResponseStatus(CREATED)
 	public GetPostResponse create(@RequestBody final CreatePostReq req) {
 		//todo: add validation
-		var entity = mapper.cratePostReqToPostEntity(req);
+		var entity = mapper.createPostReqToPostEntity(req);
 		return mapper.postEntityToPostResp(service.create(entity));
 	}
 
@@ -36,5 +37,12 @@ public class PostController {
 	public GetPostResponse getSpecificPost(@PathVariable String id) {
 		//todo: add validation
 		return mapper.postEntityToPostResp(service.fetch(UUID.fromString(id)));
+	}
+
+	@PutMapping(consumes = APPLICATION_JSON_VALUE)
+	public GetPostResponse update(@RequestBody final UpdatePostReq req) {
+		//todo: add validation
+		var entity = mapper.updatePostReqToPostEntity(req);
+		return mapper.postEntityToPostResp(service.update(entity));
 	}
 }
